@@ -21,24 +21,28 @@ import com.vaadin.ui.VerticalLayout;
  */
 @Theme("mytheme")
 public class MyUI extends UI {
-
+	
+	private TapeteForm tapete1 = new TapeteForm(this);
+	
+	private VerticalLayout layout = new VerticalLayout();
+	
     @Override
     protected void init(VaadinRequest vaadinRequest) {
-        final VerticalLayout layout = new VerticalLayout();
+    	Baraja baraja = new Baraja();
         
-        final TextField name = new TextField();
-        name.setCaption("Type your name here:");
+        Mano mano1 = baraja.getMano();
+        
+        tapete1.setMano(mano1);;
 
-        Button button = new Button("Click Me");
-        button.addClickListener( e -> {
-            layout.addComponent(new Label("Thanks " + name.getValue() 
-                    + ", it works!"));
-        });
         
-        layout.addComponents(name, button);
+        
+        layout.addComponent(tapete1);
         
         setContent(layout);
-    }
+        
+
+        
+}
 
     @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
     @VaadinServletConfiguration(ui = MyUI.class, productionMode = false)

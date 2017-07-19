@@ -28,12 +28,12 @@ public class Carta {
 		}
 		
 		public String getNombreFichero() {
-			String texto = palo.getNumero() + numero.getNumeroComoTexto() + ".png";
+			String texto = palo.getNumero() + numero.getNumeroComoTexto() + ".svg";
 			return texto;
 		}
 		
 		public static Carta getDorso() {
-			return new Carta(Numero.UNO, Palo.ESPECIAL);
+			return new Carta(Numero.AS, Palo.ESPECIAL);
 		}
 		
 		@Override

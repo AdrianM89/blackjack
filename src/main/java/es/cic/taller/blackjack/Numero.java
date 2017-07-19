@@ -2,7 +2,7 @@ package es.cic.taller.blackjack;
 
 
 public enum Numero {
-	UNO(1, 1, "as"),
+	AS(1, 1, "as"),
 	DOS(2, 1, "dos"),
 	TRES(3, 10, "tres"),
 	CUATRO(4, 4, "cuatro"),
@@ -47,7 +47,7 @@ public enum Numero {
 	
 	public static Numero getNumero(int numero) {
 		switch (numero) {
-		case 1: return Numero.UNO;
+		case 1: return Numero.AS;
 		case 2: return Numero.DOS;
 		case 3: return Numero.TRES;
 		case 4: return Numero.CUATRO;
