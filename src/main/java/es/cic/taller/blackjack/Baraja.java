@@ -51,8 +51,6 @@ public class Baraja {
 		Tapete tapete = new Tapete();
 		tapete.setCarta1(getCarta());
 		tapete.setCarta2(getCarta());
-		tapete.setCarta3(getCarta());
-		tapete.setCarta4(getCarta());
 	
 		return tapete;
 	}
