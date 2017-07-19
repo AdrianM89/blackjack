@@ -12,6 +12,7 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
+
 /**
  * This UI is the application entry point. A UI may either represent a browser window 
  * (or tab) or some part of a html page where a Vaadin application is embedded.
@@ -30,13 +31,16 @@ public class MyUI extends UI {
     protected void init(VaadinRequest vaadinRequest) {
     	Baraja baraja = new Baraja();
         
-        Mano mano1 = baraja.getMano();
-        
-        tapete1.setMano(mano1);;
+//        Mano mano1 = baraja.getManoJugador();
+//        
+//        tapete1.setMano(mano1);;
 
         
+        PantallaLayout pantallaLayout = new PantallaLayout(this, baraja);
         
-        layout.addComponent(tapete1);
+        
+        
+        layout.addComponent(pantallaLayout);
         
         setContent(layout);
         
