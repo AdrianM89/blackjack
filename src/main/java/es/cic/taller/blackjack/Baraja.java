@@ -7,8 +7,6 @@ import java.util.List;
 public class Baraja {
 	private List<Carta> listaCartas = new ArrayList<>();
 	
-	private List<Carta> listaMonton = new ArrayList<>();
-	
 	public Baraja() {
 		generarCartas();
 	}
@@ -40,17 +38,11 @@ public class Baraja {
 	
 	public void resetear() {
 		listaCartas.clear();
-		listaMonton.clear();
 		
 		generarCartas();
 	}
 	
 	private Carta getCarta() {
-		if (listaCartas.isEmpty()) {
-			listaCartas.addAll(listaMonton);
-			barajear();
-			listaMonton.clear();
-		}
 		Carta carta = listaCartas.remove(0);
 		return carta;		
 	}
