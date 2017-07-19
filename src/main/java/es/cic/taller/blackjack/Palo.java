@@ -1,10 +1,10 @@
 package es.cic.taller.blackjack;
 
 public enum Palo {
-	PICAS("Picas", 1),
+	CORAZONES("Corazones", 1),
 	DIAMANTES("Diamantes", 2),
-	TREBOL("Trebol", 3),
-	CORAZONES("Corazones", 4),
+	PICAS("Picas", 3),
+	TREBOLES("Tréboles", 4),
 	ESPECIAL("Especial", 5);
 
 	
