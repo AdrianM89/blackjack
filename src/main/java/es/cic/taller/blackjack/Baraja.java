@@ -6,7 +6,6 @@ import java.util.List;
 
 
 
-
 public class Baraja {
 	private List<Carta> listaCartas = new ArrayList<>();
 	
@@ -52,5 +51,6 @@ public class Baraja {
 		mano.setCarta2(getCarta());
 	
 		return mano;
+
 	}
 }
