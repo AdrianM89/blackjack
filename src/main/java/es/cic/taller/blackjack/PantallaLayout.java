@@ -92,6 +92,17 @@ public class PantallaLayout extends GridLayout {
 		addComponent(tapeteFormJugador, 0, 1);
 		addComponent(tapeteFormDealer, 0, 0);
 		addComponent(horizontalLayout, 0, 2);
+		
+		if (manoJugador.getCarta1().getNumero() == manoJugador.getCarta2().getNumero()) {
+			botonSeparar.addClickListener(e -> {
+				HorizontalLayout horizontalLayoutSeparar = new HorizontalLayout();
+				addComponent(horizontalLayoutSeparar, 1,1);
+				tapeteFormJugador.setMano(baraja.getManoSeparada(manoJugador));
+				TapeteForm tapeteFormJugadorNuevo = new TapeteForm(myUI);
+				tapeteFormJugadorNuevo.setMano(baraja.getManoSeparada(manoJugador));
+				horizontalLayoutSeparar.addComponent(tapeteFormJugadorNuevo);
+			});
+		}
 
 	}
 

@@ -12,7 +12,7 @@ import com.vaadin.ui.VerticalLayout;
 
 
 
-public class TapeteForm extends FormLayout {
+public class TapeteForm extends HorizontalLayout {
 
 	private HorizontalLayout horizontalLayout = new HorizontalLayout();
 	private VerticalLayout verticalLayout = new VerticalLayout();
