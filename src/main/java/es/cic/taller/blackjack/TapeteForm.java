@@ -10,6 +10,8 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.VerticalLayout;
 
+
+
 public class TapeteForm extends FormLayout {
 
 	private HorizontalLayout horizontalLayout = new HorizontalLayout();

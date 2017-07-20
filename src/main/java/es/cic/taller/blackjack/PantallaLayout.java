@@ -45,17 +45,25 @@ public class PantallaLayout extends GridLayout {
 		Button botonApostar = new Button("Apostar");
 		Button botonRetirar = new Button("Retirarse");
 		
-		
-		botonDameCarta.addClickListener(e -> {
-			
-			
-		});
-		
-		
-		
 		HorizontalLayout horizontalLayout = new HorizontalLayout();
 		
 		horizontalLayout.addComponents(botonApostar, botonRetirar, botonDameCarta, botonMePlanto, botonSeparar);
+		
+		botonDameCarta.addClickListener(e -> {
+//			Mano maxCartas = new Mano();
+//		
+//			
+//
+//			if(maxCartas.getPuntuacion()>21) {};
+			
+		});
+		
+
+        botonMePlanto.addClickListener( e -> {
+        botonDameCarta.setVisible(!botonDameCarta.isVisible());
+        });
+		
+		
 		
 		
 		
