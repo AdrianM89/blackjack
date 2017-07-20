@@ -52,6 +52,7 @@ public class PantallaLayout extends GridLayout {
 		Button botonApostar = new Button("Apostar");
 		Button botonRetirar = new Button("Retirarse");
 
+		apuesta.setVisible(false);
 		botonApostar.setEnabled(true);
 		botonApostar.addClickListener(e -> apuesta.setVisible(true));
 		apuesta.setPlaceholder("$2 - $500");
