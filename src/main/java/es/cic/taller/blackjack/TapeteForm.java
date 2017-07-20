@@ -22,6 +22,9 @@ public class TapeteForm extends HorizontalLayout {
 	private Image imagen1 = new Image();
 	private Image imagen2 = new Image();
 	private Image imagen3 = new Image();
+
+	
+	
 	private MyUI myUI;
 
 	
@@ -44,9 +47,11 @@ public class TapeteForm extends HorizontalLayout {
 	
 	public void setNuevaCarta(Mano mano) {
 		
+
 		
 		cargaCarta(mano.getCarta1(),imagen3);
 		horizontalLayout.addComponent(imagen3);
+
 	}
 	
 
@@ -64,4 +69,6 @@ public class TapeteForm extends HorizontalLayout {
 		imagen.setWidth("100px");
 		imagen.setHeight("200px");
 	}
+	
+	
 }
