@@ -26,12 +26,13 @@ public class TapeteForm extends HorizontalLayout {
 	
 	
 	private MyUI myUI;
+
 	
 	public TapeteForm(MyUI myUI) {
 		this.myUI = myUI;
 
 
-		horizontalLayout.addComponents(imagen1, imagen2, imagen3);
+		horizontalLayout.addComponents(imagen1, imagen2);
 		
 		
 		addComponents(horizontalLayout);
@@ -46,8 +47,11 @@ public class TapeteForm extends HorizontalLayout {
 	
 	public void setNuevaCarta(Mano mano) {
 		
-		cargaCarta(mano.getCarta1(), imagen3);
+
 		
+		cargaCarta(mano.getCarta1(),imagen3);
+		horizontalLayout.addComponent(imagen3);
+
 	}
 	
 
