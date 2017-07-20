@@ -76,14 +76,26 @@ public class PantallaLayout extends GridLayout {
 				intro);
 
 		botonDameCarta.addClickListener(e -> {
+			tapeteFormNuevaCarta = new TapeteForm(myUI);
+			
 
-			tapeteFormJugador.setNuevaCarta(baraja.getNuevaCarta());
+			tapeteFormNuevaCarta.setNuevaCarta(baraja.getNuevaCarta());
+			
+			tapeteFormJugador.addComponent(tapeteFormNuevaCarta);
 		});
 
-		// Visible cambio
+		// Anulo boton nueva carta
+		botonRetirar.addClickListener(e -> {
+
+			botonDameCarta.setEnabled(false);
+			botonApostar.setEnabled(false);
+			botonMePlanto.setEnabled(false);
+			botonSeparar.setEnabled(false);
+		});
+		
 		botonMePlanto.addClickListener(e -> {
 
-			botonDameCarta.setVisible(!botonDameCarta.isVisible());
+			botonDameCarta.setEnabled(false);
 		});
 
 		setRows(3);
