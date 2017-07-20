@@ -109,6 +109,8 @@ public class PantallaLayout extends GridLayout {
 		addComponent(tapeteFormDealer, 0, 0);
 		addComponent(horizontalLayout, 0, 2);
 		
+		
+		//Funcionalidad para separar mano cuando son las cartas iguales
 		if (manoJugador.getCarta1().getNumero() == manoJugador.getCarta2().getNumero()) {
 			botonSeparar.addClickListener(e -> {
 				HorizontalLayout horizontalLayoutSeparar = new HorizontalLayout();
