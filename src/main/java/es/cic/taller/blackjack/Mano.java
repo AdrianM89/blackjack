@@ -2,6 +2,8 @@ package es.cic.taller.blackjack;
 
 public class Mano {
 	
+	public static int PUNTUACION_LIMITE = 21;
+	
 	private Carta carta1;
 	private Carta carta2;
 	
@@ -26,4 +28,12 @@ public class Mano {
 				getCarta2().getNumero().getValor();
 	
 	}
+	
+	public boolean sigueJugando() {
+		
+		return getPuntuacion() < PUNTUACION_LIMITE; //Devuelve "true" si la puntuación es menor que 21
+	}
+	
+	
+	
 }

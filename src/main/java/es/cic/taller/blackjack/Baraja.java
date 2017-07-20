@@ -38,7 +38,7 @@ public class Baraja {
 		Collections.shuffle(listaCartas);
 	}
 	
-	private Carta getCarta() {
+	public Carta getCarta() {
 		
 		Carta carta = listaCartas.get(0);
 		barajear();
@@ -62,5 +62,16 @@ public class Baraja {
 		return mano;
 
 	}
+	
+	public Mano getNuevaCarta() {
+		Mano mano = new Mano();
+		mano.setCarta1(getCarta());
+	
+		return mano;
+
+	}
+	
+	
+	
 	
 }

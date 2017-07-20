@@ -11,6 +11,7 @@ public class PantallaLayout extends GridLayout {
 	
 	private TapeteForm tapeteFormJugador;
 	private TapeteForm tapeteFormDealer;
+	private TapeteForm tapeteFormNuevaCarta;
 	
 	
 	private MyUI myUI;
@@ -46,23 +47,21 @@ public class PantallaLayout extends GridLayout {
 		Button botonRetirar = new Button("Retirarse");
 		
 		
+		HorizontalLayout horizontalLayout = new HorizontalLayout();
+		
+		horizontalLayout.addComponents(botonApostar, botonRetirar, botonDameCarta, botonMePlanto, botonSeparar);
+		
 		botonDameCarta.addClickListener(e -> {
 			
+			tapeteFormJugador.setNuevaCarta(baraja.getNuevaCarta());
+
 			
 		});
 		
 		
 		
-		HorizontalLayout horizontalLayout = new HorizontalLayout();
-		
-		horizontalLayout.addComponents(botonApostar, botonRetirar, botonDameCarta, botonMePlanto, botonSeparar);
-		
-		
-		
-		
-		
 		setRows(3);
-		setColumns(1);
+		setColumns(2);
 		
 		addComponent(tapeteFormJugador, 0, 1);
 		addComponent(tapeteFormDealer, 0, 0);
