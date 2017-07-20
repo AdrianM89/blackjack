@@ -20,4 +20,10 @@ public class Mano {
 	}
 	
 	
+	public int getPuntuacion() {
+		return 
+				getCarta1().getNumero().getValor() +
+				getCarta2().getNumero().getValor();
+	
+	}
 }

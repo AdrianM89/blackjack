@@ -45,7 +45,7 @@ public class Baraja {
 		return carta;		
 	}
 	
-	public Mano getMano() {
+	public Mano getManoJugador() {
 		Mano mano = new Mano();
 		mano.setCarta1(getCarta());
 		mano.setCarta2(getCarta());
@@ -53,4 +53,14 @@ public class Baraja {
 		return mano;
 
 	}
+	
+	public Mano getManoDealer() {
+		Mano mano = new Mano();
+		mano.setCarta1(getCarta());
+		mano.setCarta2(Carta.getDorso());
+	
+		return mano;
+
+	}
+	
 }

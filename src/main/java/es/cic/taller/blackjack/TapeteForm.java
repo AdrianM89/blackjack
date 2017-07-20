@@ -35,6 +35,7 @@ public class TapeteForm extends FormLayout {
 		cargaCarta(mano.getCarta1(), imagen1);
 		cargaCarta(mano.getCarta2(), imagen2);
 	}
+	
 
 
 	private Resource getImageResource(String recurso) {
