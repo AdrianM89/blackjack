@@ -17,6 +17,9 @@ public class PantallaLayout extends GridLayout {
 	private TapeteForm tapeteFormDealer;
 
 	private TapeteForm tapeteFormNuevaCarta;
+	private TapeteForm tapeteFormNuevaCarta2;
+	HorizontalLayout horizontalLayoutSeparar;
+	TapeteForm tapeteFormJugadorNuevo;
 
 	TextField apuesta = new TextField();
 	private Jugador jugador1;
@@ -38,6 +41,7 @@ public class PantallaLayout extends GridLayout {
 
 		this.baraja = baraja;
 		
+		horizontalLayoutSeparar = new HorizontalLayout();
 		
 
 		Mano manoJugador = baraja.getManoJugador();
@@ -83,12 +87,12 @@ public class PantallaLayout extends GridLayout {
 		
 		botonDameCarta.addClickListener(e -> {
 
-			tapeteFormNuevaCarta = new TapeteForm(myUI);
-			tapeteFormNuevaCarta.setNuevaCarta(baraja.getNuevaCarta());;
+			tapeteFormNuevaCarta2 = new TapeteForm(myUI);
+			tapeteFormNuevaCarta2.setNuevaCarta(baraja.getNuevaCarta());;
 			
 			//tapeteFormJugador.setNuevaCarta(baraja.getNuevaCarta());
 			
-			tapeteFormJugador.addComponent(tapeteFormNuevaCarta);
+			tapeteFormJugadorNuevo.addComponent(tapeteFormNuevaCarta2);
 			
 			
 		});
@@ -98,8 +102,24 @@ public class PantallaLayout extends GridLayout {
 		
 		// Visible cambio
 		botonMePlanto.addClickListener(e -> {
-
+			
+			if(horizontalLayoutSeparar==null) {
 			botonDameCarta.setVisible(!botonDameCarta.isVisible());
+			}
+			else {
+				botonDameCarta.addClickListener(ev -> {
+
+					tapeteFormNuevaCarta = new TapeteForm(myUI);
+					tapeteFormNuevaCarta.setNuevaCarta(baraja.getNuevaCarta());;
+					
+					//tapeteFormJugador.setNuevaCarta(baraja.getNuevaCarta());
+					
+					tapeteFormJugador.addComponent(tapeteFormNuevaCarta);
+					
+					
+				});
+			}
+			
 		});
 
 		setRows(3);
@@ -113,14 +133,14 @@ public class PantallaLayout extends GridLayout {
 		//Funcionalidad para separar mano cuando son las cartas iguales
 		if (manoJugador.getCarta1().getNumero() == manoJugador.getCarta2().getNumero()) {
 			botonSeparar.addClickListener(e -> {
-				HorizontalLayout horizontalLayoutSeparar = new HorizontalLayout();
 				addComponent(horizontalLayoutSeparar, 1,1);
 				tapeteFormJugador.setMano(baraja.getManoSeparada(manoJugador));
-				TapeteForm tapeteFormJugadorNuevo = new TapeteForm(myUI);
+				tapeteFormJugadorNuevo = new TapeteForm(myUI);
 				tapeteFormJugadorNuevo.setMano(baraja.getManoSeparada(manoJugador));
 				horizontalLayoutSeparar.addComponent(tapeteFormJugadorNuevo);
 			});
 		}
+		
 
 	}
 
