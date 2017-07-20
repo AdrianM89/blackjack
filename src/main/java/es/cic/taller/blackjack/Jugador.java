@@ -5,6 +5,7 @@ public class Jugador {
 	private String nombre;
 	private Mano manoActual;
 	private double dinero;
+	private int apuesta;
 	
 	public Jugador(String nombre, double dinero) {
 		this.nombre = nombre;
@@ -25,5 +26,11 @@ public class Jugador {
 	public double setDinero(double dinero) {
 		this.dinero = dinero;
 		return dinero;
+	}
+	public int getApuesta() {
+		return apuesta;
+	}
+	public void apostar(int apuesta) {
+		this.apuesta = apuesta;
 	}
 }
