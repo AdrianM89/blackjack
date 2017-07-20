@@ -1,6 +1,8 @@
 package es.cic.taller.blackjack;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.vaadin.server.FileResource;
 import com.vaadin.server.Resource;
@@ -12,7 +14,7 @@ import com.vaadin.ui.VerticalLayout;
 
 
 
-public class TapeteForm extends FormLayout {
+public class TapeteForm extends HorizontalLayout {
 
 	private HorizontalLayout horizontalLayout = new HorizontalLayout();
 	private VerticalLayout verticalLayout = new VerticalLayout();
@@ -20,6 +22,9 @@ public class TapeteForm extends FormLayout {
 	private Image imagen1 = new Image();
 	private Image imagen2 = new Image();
 	private Image imagen3 = new Image();
+
+	
+	
 	private MyUI myUI;
 	
 	public TapeteForm(MyUI myUI) {
@@ -41,8 +46,8 @@ public class TapeteForm extends FormLayout {
 	
 	public void setNuevaCarta(Mano mano) {
 		
-		
 		cargaCarta(mano.getCarta1(), imagen3);
+		
 	}
 	
 
@@ -60,4 +65,6 @@ public class TapeteForm extends FormLayout {
 		imagen.setWidth("100px");
 		imagen.setHeight("200px");
 	}
+	
+	
 }

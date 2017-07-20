@@ -6,6 +6,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.TextField;
@@ -36,6 +37,8 @@ public class PantallaLayout extends GridLayout {
 		this.myUI = myUI;
 
 		this.baraja = baraja;
+		
+		
 
 		Mano manoJugador = baraja.getManoJugador();
 		Mano manoDealer = baraja.getManoDealer();
@@ -55,7 +58,7 @@ public class PantallaLayout extends GridLayout {
 		apuesta.setVisible(false);
 		botonApostar.setEnabled(true);
 		botonApostar.addClickListener(e -> apuesta.setVisible(true));
-		apuesta.setPlaceholder("$2 - $500");
+		apuesta.setPlaceholder("$2 - $999");
 		apuesta.setMaxLength(3);
 		updateCaption(0);
 		Button intro = new Button("Intro");
@@ -70,16 +73,29 @@ public class PantallaLayout extends GridLayout {
 			});
 		});
 
+		
+		
 		HorizontalLayout horizontalLayout = new HorizontalLayout();
 
 		horizontalLayout.addComponents(botonApostar, botonRetirar, botonDameCarta, botonMePlanto, botonSeparar, apuesta,
 				intro);
 
+		
 		botonDameCarta.addClickListener(e -> {
 
-			tapeteFormJugador.setNuevaCarta(baraja.getNuevaCarta());
+			tapeteFormNuevaCarta = new TapeteForm(myUI);
+			tapeteFormNuevaCarta.setNuevaCarta(baraja.getNuevaCarta());;
+			
+			//tapeteFormJugador.setNuevaCarta(baraja.getNuevaCarta());
+			
+			tapeteFormJugador.addComponent(tapeteFormNuevaCarta);
+			
+			
 		});
 
+		
+		
+		
 		// Visible cambio
 		botonMePlanto.addClickListener(e -> {
 
