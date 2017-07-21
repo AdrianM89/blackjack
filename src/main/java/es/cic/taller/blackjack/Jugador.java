@@ -6,6 +6,7 @@ public class Jugador {
 	private Mano manoActual;
 	private double dinero;
 	private int apuesta;
+	private int puntuacion;
 	
 	public Jugador(String nombre, double dinero) {
 		this.nombre = nombre;
@@ -16,6 +17,9 @@ public class Jugador {
 	}
 	public void setManoActual(Mano manoActual) {
 		this.manoActual = manoActual;
+	}
+	public void anhadirCartaAMano(Carta carta) {
+		manoActual.anhadirCarta(carta);
 	}
 	public String getNombre() {
 		return nombre;
@@ -32,5 +36,12 @@ public class Jugador {
 	}
 	public void apostar(int apuesta) {
 		this.apuesta = apuesta;
+	}
+	public int puntuacion() {
+		int puntuacion = 0;
+		for(int i = 0; i<manoActual.cartas.size(); i++) {
+			puntuacion += manoActual.getCarta(i).getNumero().getValor();
+		}
+		return puntuacion;
 	}
 }

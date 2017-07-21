@@ -47,8 +47,8 @@ public class Baraja {
 	
 	public Mano getManoJugador() {
 		Mano mano = new Mano();
-		mano.setCarta1(getCarta());
-		mano.setCarta2(getCarta());
+		mano.setCarta(1, getCarta());
+		mano.setCarta(2, getCarta());
 	
 		return mano;
 
@@ -56,22 +56,22 @@ public class Baraja {
 	
 	public Mano getManoSeparada1(Mano mano) {
 		Mano manoNueva = new Mano();
-		manoNueva.setCarta1(mano.getCarta1());
-		manoNueva.setCarta2(getCarta());
+		manoNueva.setCarta(1, mano.getCarta(0));
+		manoNueva.setCarta(2, getCarta());
 		return manoNueva;
 	}
 	
 	public Mano getManoSeparada2(Mano mano) {
 		Mano manoNueva = new Mano();
-		manoNueva.setCarta1(mano.getCarta2());
-		manoNueva.setCarta2(getCarta());
+		manoNueva.setCarta(1, mano.getCarta(1));
+		manoNueva.setCarta(2, getCarta());
 		return manoNueva;
 	}
 	
 	public Mano getManoDealer() {
 		Mano mano = new Mano();
-		mano.setCarta1(getCarta());
-		mano.setCarta2(Carta.getDorso());
+		mano.setCarta(1, getCarta());
+		mano.setCarta(2, Carta.getDorso());
 	
 		return mano;
 
@@ -79,7 +79,7 @@ public class Baraja {
 	
 	public Mano getNuevaCarta() {
 		Mano mano = new Mano();
-		mano.setCarta1(getCarta());
+		mano.setCarta(1, getCarta());
 	
 		return mano;
 

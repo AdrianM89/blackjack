@@ -1,32 +1,41 @@
 package es.cic.taller.blackjack;
 
+import java.util.ArrayList;
+
 public class Mano {
 	
 	public static int PUNTUACION_LIMITE = 21;
 	
-	private Carta carta1;
-	private Carta carta2;
-	
-	
-	public Carta getCarta1() {
-		return carta1;
-	}
-	public void setCarta1(Carta carta1) {
-		this.carta1 = carta1;
-	}
-	public Carta getCarta2() {
-		return carta2;
-	}
-	public void setCarta2(Carta carta2) {
-		this.carta2 = carta2;
-	}
+	ArrayList<Carta> cartas = new ArrayList<Carta>();
 	
 	
 	public int getPuntuacion() {
-		return 
-				getCarta1().getNumero().getValor() +
-				getCarta2().getNumero().getValor();
+		int puntuacion = 0;
+		for(int i = 0; i<cartas.size(); i++) {
+			puntuacion += cartas.get(i).getNumero().getValor();
+		}
+		return puntuacion;
+	}
 	
+	public Carta getCarta(int i) {
+		for(int j = 0; j<cartas.size(); j++) {
+			if(j == i) {
+			return cartas.get(i);
+			}
+		}
+		return null;
+	}
+	
+	public void setCarta(int i, Carta carta) {
+		for(int j = 0; j<cartas.size(); j++) {
+			if(j == (i-1)) {
+			cartas.set(i-1, carta);
+			}
+		}
+	}
+	
+	public void anhadirCarta(Carta carta) {
+		 cartas.add(carta);
 	}
 	
 	public boolean sigueJugando() {
