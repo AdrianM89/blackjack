@@ -18,12 +18,10 @@ public class Mano {
 	}
 	
 	public Carta getCarta(int i) {
-		for(int j = 0; j<cartas.size(); j++) {
-			if(j == i) {
-			return cartas.get(i);
-			}
+		if(i > cartas.size()) {
+			return null;
 		}
-		return null;
+		return cartas.get(i-1);
 	}
 	
 	public void setCarta(int i, Carta carta) {

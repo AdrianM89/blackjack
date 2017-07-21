@@ -40,23 +40,16 @@ public class TapeteForm extends HorizontalLayout {
 }
 
 	public void setMano(Mano mano) {
-		
-		
 		cargaCarta(mano.getCarta(1), imagen1);
 		cargaCarta(mano.getCarta(2), imagen2);
 	}
 	
 	public void setNuevaCarta(Mano mano) {
-		
-
 		cartaNueva = mano.getCarta(1);
 		cargaCarta(cartaNueva, imagen3);
 		horizontalLayout.addComponent(imagen3);
-
 	}
 	
-
-
 	private Resource getImageResource(String recurso) {
 		String basepath = VaadinService.getCurrent()
                 .getBaseDirectory().getAbsolutePath();
