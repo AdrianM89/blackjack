@@ -54,9 +54,16 @@ public class Baraja {
 
 	}
 	
-	public Mano getManoSeparada(Mano mano) {
+	public Mano getManoSeparada1(Mano mano) {
 		Mano manoNueva = new Mano();
 		manoNueva.setCarta1(mano.getCarta1());
+		manoNueva.setCarta2(getCarta());
+		return manoNueva;
+	}
+	
+	public Mano getManoSeparada2(Mano mano) {
+		Mano manoNueva = new Mano();
+		manoNueva.setCarta1(mano.getCarta2());
 		manoNueva.setCarta2(getCarta());
 		return manoNueva;
 	}

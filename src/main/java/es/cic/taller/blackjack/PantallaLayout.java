@@ -54,7 +54,11 @@ public class PantallaLayout extends GridLayout {
 		tapeteFormDealer.setMano(manoDealer);
 
 		Button botonDameCarta = new Button("Nueva carta");
+		Button botonDameCartaSegundaMano = new Button ("Nueva carta");
+		botonDameCartaSegundaMano.setVisible(false);
 		Button botonMePlanto = new Button("Plantarse");
+		Button botonMePlantoSegundaMano = new Button("Plantarse");
+		botonMePlantoSegundaMano.setVisible(false);
 		Button botonSeparar = new Button("Separar");
 		Button botonApostar = new Button("Apostar");
 		Button botonRetirar = new Button("Retirarse");
@@ -81,18 +85,19 @@ public class PantallaLayout extends GridLayout {
 		
 		HorizontalLayout horizontalLayout = new HorizontalLayout();
 
-		horizontalLayout.addComponents(botonApostar, botonRetirar, botonDameCarta, botonMePlanto, botonSeparar, apuesta,
+		horizontalLayout.addComponents(botonApostar, botonRetirar, botonDameCarta, botonDameCartaSegundaMano, botonMePlanto, botonMePlantoSegundaMano, botonSeparar, apuesta,
 				intro);
 
 		
 		botonDameCarta.addClickListener(e -> {
 
-			tapeteFormNuevaCarta2 = new TapeteForm(myUI);
-			tapeteFormNuevaCarta2.setNuevaCarta(baraja.getNuevaCarta());;
+			tapeteFormNuevaCarta = new TapeteForm(myUI);
+			tapeteFormNuevaCarta.setNuevaCarta(baraja.getNuevaCarta());;
 			
 			//tapeteFormJugador.setNuevaCarta(baraja.getNuevaCarta());
 			
-			tapeteFormJugadorNuevo.addComponent(tapeteFormNuevaCarta2);
+			tapeteFormJugador.addComponent(tapeteFormNuevaCarta);
+
 			
 			
 		});
@@ -107,19 +112,19 @@ public class PantallaLayout extends GridLayout {
 			botonDameCarta.setVisible(!botonDameCarta.isVisible());
 			}
 			else {
-				botonDameCarta.addClickListener(ev -> {
+				botonDameCarta.setVisible(false);
+				botonMePlanto.setVisible(false);
+				botonDameCartaSegundaMano.setVisible(true);
+				botonMePlantoSegundaMano.setVisible(true);
+				botonDameCartaSegundaMano.addClickListener(ev -> {
 
-					tapeteFormNuevaCarta = new TapeteForm(myUI);
-					tapeteFormNuevaCarta.setNuevaCarta(baraja.getNuevaCarta());;
-					
+					tapeteFormNuevaCarta2 = new TapeteForm(myUI);
+					tapeteFormNuevaCarta2.setNuevaCarta(baraja.getNuevaCarta());;
 					//tapeteFormJugador.setNuevaCarta(baraja.getNuevaCarta());
-					
-					tapeteFormJugador.addComponent(tapeteFormNuevaCarta);
-					
-					
+					tapeteFormJugadorNuevo.addComponent(tapeteFormNuevaCarta2);
 				});
+				botonMePlantoSegundaMano.addClickListener(eve -> botonDameCartaSegundaMano.setVisible(false));
 			}
-			
 		});
 
 		setRows(3);
@@ -134,9 +139,9 @@ public class PantallaLayout extends GridLayout {
 		if (manoJugador.getCarta1().getNumero() == manoJugador.getCarta2().getNumero()) {
 			botonSeparar.addClickListener(e -> {
 				addComponent(horizontalLayoutSeparar, 1,1);
-				tapeteFormJugador.setMano(baraja.getManoSeparada(manoJugador));
+				tapeteFormJugador.setMano(baraja.getManoSeparada1(manoJugador));
 				tapeteFormJugadorNuevo = new TapeteForm(myUI);
-				tapeteFormJugadorNuevo.setMano(baraja.getManoSeparada(manoJugador));
+				tapeteFormJugadorNuevo.setMano(baraja.getManoSeparada2(manoJugador));
 				horizontalLayoutSeparar.addComponent(tapeteFormJugadorNuevo);
 			});
 		}
