@@ -35,9 +35,5 @@ public class Carta {
 		public static Carta getDorso() {
 			return new Carta(Numero.AS, Palo.ESPECIAL);
 		}
-		
-		@Override
-		public String toString() {		
-			return numero.getTexto() + " de " + palo.getTexto();
-		}
+
 }

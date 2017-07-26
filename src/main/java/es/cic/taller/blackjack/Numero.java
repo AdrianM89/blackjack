@@ -3,8 +3,8 @@ package es.cic.taller.blackjack;
 
 public enum Numero {
 	AS(1, 1, "as"),
-	DOS(2, 1, "dos"),
-	TRES(3, 10, "tres"),
+	DOS(2, 2, "dos"),
+	TRES(3, 3, "tres"),
 	CUATRO(4, 4, "cuatro"),
 	CINCO(5, 5, "cinco"),
 	SEIS(6, 6, "seis"),
