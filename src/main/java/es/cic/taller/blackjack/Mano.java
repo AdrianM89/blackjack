@@ -17,7 +17,6 @@ public class Mano {
 		}
 		return puntuacion;
 	}
-
 	
 	public Carta getCarta(int i) {
 		if(i > cartas.size()) {
