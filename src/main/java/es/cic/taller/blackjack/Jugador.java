@@ -6,7 +6,6 @@ public class Jugador {
 	private Mano manoActual;
 	private double dinero;
 	private int apuesta;
-	private int puntuacion;
 	
 	public Jugador(String nombre, double dinero) {
 		this.nombre = nombre;
@@ -39,7 +38,7 @@ public class Jugador {
 	}
 	public int puntuacion() {
 		int puntuacion = 0;
-		for(int i = 0; i<manoActual.cartas.size(); i++) {
+		for(int i = 0; i < manoActual.cartas.size(); i++) {
 			puntuacion += manoActual.getCarta(i).getNumero().getValor();
 		}
 		return puntuacion;

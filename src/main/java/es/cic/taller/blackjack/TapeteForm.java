@@ -44,10 +44,11 @@ public class TapeteForm extends HorizontalLayout {
 		cargaCarta(mano.getCarta(2), imagen2);
 	}
 	
-	public void setNuevaCarta(Mano mano) {
+	public Carta setNuevaCarta(Mano mano) {
 		cartaNueva = mano.getCarta(1);
 		cargaCarta(cartaNueva, imagen3);
 		horizontalLayout.addComponent(imagen3);
+		return cartaNueva;
 	}
 	
 	private Resource getImageResource(String recurso) {
