@@ -109,7 +109,7 @@ public class PantallaLayout extends GridLayout {
 		
 		// Visible cambio
 		botonMePlanto.addClickListener(e -> {
-			
+			jugador1.plantarse();
 			if(horizontalLayoutSeparar==null) {
 			botonDameCarta.setVisible(!botonDameCarta.isVisible());
 			jugadoresYaPlantados.add(jugador1);

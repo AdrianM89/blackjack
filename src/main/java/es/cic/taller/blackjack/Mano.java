@@ -25,10 +25,8 @@ public class Mano {
 	}
 	
 	public void setCarta(int i, Carta carta) {
-		for(int j = 0; j<cartas.size(); j++) {
-			if(j == (i-1)) {
-			cartas.set(i-1, carta);
-			}
+		if(i <= cartas.size()) {
+			cartas.set(i-1,  carta);
 		}
 	}
 	

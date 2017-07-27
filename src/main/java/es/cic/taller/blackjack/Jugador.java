@@ -7,6 +7,7 @@ public class Jugador {
 	private double dinero;
 	private int apuesta;
 	private int puntuacion;
+	boolean isPlantado = false;
 	
 	public Jugador(String nombre, double dinero) {
 		this.nombre = nombre;
@@ -43,5 +44,11 @@ public class Jugador {
 			puntuacion += manoActual.getCarta(i).getNumero().getValor();
 		}
 		return puntuacion;
+	}
+	public void plantarse() {
+		if(isPlantado == false) {
+			isPlantado = true;
+		}
+		isPlantado = false;
 	}
 }
