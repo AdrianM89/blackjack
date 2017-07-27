@@ -4,6 +4,9 @@ package es.cic.taller.blackjack;
 import java.io.File;
 import java.util.ArrayList;
 
+
+import java.util.List;
+
 import com.vaadin.server.FileResource;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinService;
@@ -67,26 +70,26 @@ public class PantallaLayout extends GridLayout {
 
 		
 		Label puntuacion = new Label();
+		Label puntuacionDealerLabel = new Label();
 		puntuacion.addStyleName("h2");
 		
 		int dineroInicial = 1000;
 		Label dinero = new Label();
 		dinero.addStyleName("h2");
 		dinero.setValue("Dinero: " + dineroInicial);
+		puntuacionDealerLabel.addStyleName("h2");
 
 		horizontalLayoutSeparar = new HorizontalLayout();
 
 		Mano manoDealer = baraja.getManoDealer();
 		tapeteFormDealer = new TapeteForm(myUI);
-		tapeteFormDealer.setMano(manoDealer);
+		tapeteFormDealer.setManoDealer(manoDealer);
 
-		
 		Mano manoJugador = baraja.getManoJugador();
 		tapeteFormJugador = new TapeteForm(myUI);
 		tapeteFormJugador.setMano(manoJugador);
 
 		Button botonComenzar = new Button("Comenzar");
-
 		Button botonDameCarta = new Button("Nueva carta");
 		Button botonDameCartaSegundaMano = new Button("Nueva carta");
 		botonDameCartaSegundaMano.setVisible(false);
@@ -101,22 +104,22 @@ public class PantallaLayout extends GridLayout {
 		Button botonApostar = new Button("Apostar");
 
 		Button botonRetirar = new Button("Retirarse");
-	
 
 		//Imagen de inicio
 		String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
 		FileResource resource = new FileResource(new File(basepath + "/images/blackjack.png"));
 		Image imagen = new Image(null, resource);
-			
-		
+
 		// APOSTAR
 		apuesta.setVisible(false);
 		botonApostar.setEnabled(true);
 		botonApostar.addClickListener(e -> apuesta.setVisible(true));
 		apuesta.setPlaceholder("$1 - $999");
 		apuesta.setMaxLength(3);
+		updateCaption(0);
 
 		apuesta.addValueChangeListener(event -> {
+			updateCaption(event.getValue().length());
 			jugador1.apostar(Integer.parseInt(apuesta.getValue()));
 			botonComenzar.setEnabled(true);
 		});
@@ -145,31 +148,27 @@ public class PantallaLayout extends GridLayout {
 		botonDameCarta.addClickListener(e -> {
 			tapeteFormNuevaCarta = new TapeteForm(myUI);
 			tapeteFormNuevaCarta.setNuevaCarta(baraja.getNuevaCarta());
-			tapeteFormJugador.addComponent(tapeteFormNuevaCarta);			
+			tapeteFormJugador.addComponent(tapeteFormNuevaCarta);
 			manoJugador.anhadirCarta(tapeteFormNuevaCarta.cartaNueva);
-			puntuacion.setValue("Puntuacion: "+manoJugador.getPuntuacion());
+			puntuacion.setValue("Puntuacion: " + manoJugador.getPuntuacion());
 
 		});
 
-		
-		//ME PLANTO
+		// ME PLANTO
 		botonMePlanto.addClickListener(e -> {
-
-			mePlanto(myUI, baraja, manoDealer, botonDameCarta, botonDameCartaSegundaMano, botonMePlanto,
+			mePlanto(myUI, baraja, manoDealer, manoJugador, botonDameCarta, botonDameCartaSegundaMano, botonMePlanto,
 					botonMePlantoSegundaMano);
 		});
-		
-		
-		
-		
-		//Funcionalidad para separar mano cuando son las cartas iguales
+
+		// Funcionalidad para separar mano cuando son las cartas iguales
+
 		// SEPARAR
 		if (manoJugador.getCarta(1).getNumero() == manoJugador.getCarta(2).getNumero()) {
 			botonSeparar.setEnabled(true);
 			botonSeparar.addClickListener(e -> {
 
 				botonSeparar.setEnabled(false);
-				addComponent(horizontalLayoutSeparar, 1,1);
+				addComponent(horizontalLayoutSeparar, 1, 1);
 
 				tapeteFormJugador.setMano(baraja.getManoSeparada1(manoJugador));
 				tapeteFormJugadorNuevo = new TapeteForm(myUI);
@@ -177,18 +176,14 @@ public class PantallaLayout extends GridLayout {
 				horizontalLayoutSeparar.addComponent(tapeteFormJugadorNuevo);
 			});
 		}
-
-		
-		
-		//COMENZAR
+		// COMENZAR
 		puntuacion.setValue("Puntuacion: " + manoJugador.getPuntuacion());
+		puntuacionDealerLabel.setValue("Puntuacion Dealer: " + manoDealer.getPuntuacionDealer());
 		botonComenzar.addClickListener(e -> {
-			
+
 			removeComponent(0, 0);
 			addComponent(tapeteFormDealer, 0, 0);
-			removeComponent(0, 1);
 			addComponent(tapeteFormJugador, 0, 1);
-			removeComponent(0, 4);
 			addComponent(puntuacion,0,4);
 			addComponent(dinero, 1, 4);
 			int apostado = dineroInicial - Integer.parseInt(apuesta.getValue());
@@ -198,6 +193,9 @@ public class PantallaLayout extends GridLayout {
 			horizontalLayout.addComponents(botonComenzar, botonApostar, botonRetirar, botonDameCarta, botonDameCartaSegundaMano, botonMePlanto, 
 					botonMePlantoSegundaMano, botonSeparar, apuesta, dinero);
 			
+			addComponent(puntuacion, 0, 4);
+			addComponent(puntuacionDealerLabel, 1, 4);
+
 		});
 		
 		setRows(6);
@@ -207,40 +205,40 @@ public class PantallaLayout extends GridLayout {
 		addComponent(horizontalLayout, 0, 2);
 	}
 
-
-
-
-	
-	
-	private void mePlanto(MyUI myUI, Baraja baraja, Mano manoDealer, Button botonDameCarta,
+	private void mePlanto(MyUI myUI, Baraja baraja, Mano manoDealer, Mano manoJugador, Button botonDameCarta,
 			Button botonDameCartaSegundaMano, Button botonMePlanto, Button botonMePlantoSegundaMano) {
 
 		if (horizontalLayoutSeparar == null) {
+
 			botonDameCarta.setVisible(!botonDameCarta.isVisible());
 			jugadoresYaPlantados.add(jugador1);
+
 			if (jugadoresYaPlantados.size() == jugadores.size()) {
-				int puntuacionDealer = manoDealer.getCarta(1).getNumero().getValor()
-						+ manoDealer.getCarta(2).getNumero().getValor();
+
+				int puntuacionDealer = manoDealer.getPuntuacionDealer();
+				int puntuacionJugador = manoJugador.getPuntuacion();
+
 				if (puntuacionDealer < PUNTUACION_17) {
+
 					tapeteFormNuevaCartaDealer = new TapeteForm(myUI);
 					tapeteFormNuevaCartaDealer.setNuevaCarta(baraja.getNuevaCarta());
 					tapeteFormDealer.addComponent(tapeteFormNuevaCartaDealer);
 				} else {
 					for (int i = 0; i < jugadores.size(); i++) {
 						if (puntuacionDealer < PUNTUACION_21) {
-							if (puntuacionDealer > jugadores.get(i).puntuacion()) {
+							if (puntuacionDealer > puntuacionJugador) {
 								jugadores.get(i)
 										.setDinero(jugadores.get(i).getDinero() - jugadores.get(i).getApuesta());
 								jugadores.get(i).apostar(0);
-							} else if (puntuacionDealer == jugadores.get(i).puntuacion()) {
+							} else if (puntuacionDealer == puntuacionJugador) {
 								jugadores.get(i).apostar(0);
-							} else if (puntuacionDealer < jugadores.get(i).puntuacion()) {
+							} else if (puntuacionDealer < puntuacionJugador) {
 								jugadores.get(i)
 										.setDinero(jugadores.get(i).getDinero() + jugadores.get(i).getApuesta());
 								jugadores.get(i).apostar(0);
 							}
 						} else if (puntuacionDealer == PUNTUACION_21) {
-							if (jugadores.get(i).puntuacion() == PUNTUACION_21) {
+							if (puntuacionJugador == PUNTUACION_21) {
 								jugadores.get(i).apostar(0);
 							} else {
 								jugadores.get(i)
@@ -248,11 +246,11 @@ public class PantallaLayout extends GridLayout {
 								jugadores.get(i).apostar(0);
 							}
 						} else {
-							if (jugadores.get(i).puntuacion() < PUNTUACION_21) {
+							if (puntuacionJugador < PUNTUACION_21) {
 								jugadores.get(i)
 										.setDinero(jugadores.get(i).getDinero() + jugadores.get(i).getApuesta());
 								jugadores.get(i).apostar(0);
-							} else if (jugadores.get(i).puntuacion() == PUNTUACION_21) {
+							} else if (puntuacionJugador == PUNTUACION_21) {
 								jugadores.get(i)
 										.setDinero(jugadores.get(i).getDinero() + jugadores.get(i).getApuesta() * 1.5);
 								jugadores.get(i).apostar(0);
@@ -274,17 +272,21 @@ public class PantallaLayout extends GridLayout {
 
 				tapeteFormNuevaCarta2 = new TapeteForm(myUI);
 				tapeteFormNuevaCarta2.setNuevaCarta(baraja.getNuevaCarta());
-				
+
 				tapeteFormJugadorNuevo.addComponent(tapeteFormNuevaCarta2);
 			});
+
 			botonMePlantoSegundaMano.addClickListener(eve -> {
 
 				String str = new String();
 				botonDameCartaSegundaMano.setVisible(false);
 				jugadoresYaPlantados.add(jugador1);
+
 				if (jugadoresYaPlantados.size() == jugadores.size()) {
-					int puntuacionDealer = manoDealer.getCarta(1).getNumero().getValor()
-							+ manoDealer.getCarta(2).getNumero().getValor();
+
+					int puntuacionDealer = manoDealer.getPuntuacionDealer();
+					int puntuacionJugador = manoJugador.getPuntuacion();
+
 					if (puntuacionDealer < PUNTUACION_17) {
 						tapeteFormNuevaCartaDealer = new TapeteForm(myUI);
 						tapeteFormNuevaCartaDealer.setNuevaCarta(baraja.getNuevaCarta());
@@ -292,22 +294,22 @@ public class PantallaLayout extends GridLayout {
 					} else {
 						for (int i = 0; i < jugadores.size(); i++) {
 							if (puntuacionDealer < PUNTUACION_21) {
-								if (puntuacionDealer > jugadores.get(i).puntuacion()) {
+								if (puntuacionDealer > puntuacionJugador) {
 									jugadores.get(i)
 											.setDinero(jugadores.get(i).getDinero() - jugadores.get(i).getApuesta());
 									jugadores.get(i).apostar(0);
 									str = "Ganador: Banca";
-								} else if (puntuacionDealer == jugadores.get(i).puntuacion()) {
+								} else if (puntuacionDealer == puntuacionJugador) {
 									jugadores.get(i).apostar(0);
 									str = "Empate";
-								} else if (puntuacionDealer < jugadores.get(i).puntuacion()) {
+								} else if (puntuacionDealer < puntuacionJugador) {
 									jugadores.get(i)
 											.setDinero(jugadores.get(i).getDinero() + jugadores.get(i).getApuesta());
 									jugadores.get(i).apostar(0);
 									str = "Ganador: " + jugadores.get(i).getNombre();
 								}
 							} else if (puntuacionDealer == PUNTUACION_21) {
-								if (jugadores.get(i).puntuacion() == PUNTUACION_21) {
+								if (puntuacionJugador == PUNTUACION_21) {
 									jugadores.get(i).apostar(0);
 									str = "Empate";
 								} else {
@@ -317,12 +319,12 @@ public class PantallaLayout extends GridLayout {
 									str = "Ganador: Banca";
 								}
 							} else {
-								if (jugadores.get(i).puntuacion() < PUNTUACION_21) {
+								if (puntuacionJugador < PUNTUACION_21) {
 									jugadores.get(i)
 											.setDinero(jugadores.get(i).getDinero() + jugadores.get(i).getApuesta());
 									jugadores.get(i).apostar(0);
 									str = "Ganador: " + jugadores.get(i).getNombre();
-								} else if (jugadores.get(i).puntuacion() == PUNTUACION_21) {
+								} else if (puntuacionJugador == PUNTUACION_21) {
 									jugadores.get(i).setDinero(
 											jugadores.get(i).getDinero() + jugadores.get(i).getApuesta() * 1.5);
 									jugadores.get(i).apostar(0);
@@ -337,13 +339,13 @@ public class PantallaLayout extends GridLayout {
 						}
 					}
 				}
+
 				Label ganador = new Label(str);
-				addComponent(ganador, 0, 5);
+				// addComponent(ganador, 0, 5);
 			});
 		}
 
 	}
-
 
 	private void updateCaption(final int textLength) {
 		final StringBuilder builder = new StringBuilder();

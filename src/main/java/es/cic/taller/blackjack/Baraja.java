@@ -4,11 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-
-
 public class Baraja {
 	private List<Carta> listaCartas = new ArrayList<>();
-	
+
 	public Baraja() {
 		generarCartas();
 	}
@@ -20,12 +18,12 @@ public class Baraja {
 		listaCartas.addAll(getPalo(Palo.TREBOLES));
 		barajear();
 	}
-	
+
 	private List<Carta> getPalo(Palo palo) {
-		
+
 		List<Carta> listaCartasPalo = new ArrayList<>();
-		
-		for (int i= 1; i <= Palo.CUANTAS_CARTA_POR_PALO; i++) {
+
+		for (int i = 1; i <= Palo.CUANTAS_CARTA_POR_PALO; i++) {
 			Carta carta = new Carta();
 			Numero numero = Numero.getNumero(i);
 			carta.setNumero(numero);
@@ -33,40 +31,41 @@ public class Baraja {
 			listaCartasPalo.add(carta);
 		}
 		return listaCartasPalo;
-}
+	}
+
 	public void barajear() {
 		Collections.shuffle(listaCartas);
 	}
-	
+
 	public Carta getCarta() {
-		
+
 		Carta carta = listaCartas.get(0);
 		barajear();
-		return carta;		
+		return carta;
 	}
-	
+
 	public Mano getManoJugador() {
 		Mano mano = new Mano();
 		Carta carta1 = getCarta();
+		mano.anhadirCarta(carta1);
 		mano.setCarta(1, carta1);
-		mano.anhadirCarta(carta1);	
 		Carta carta2 = getCarta();
-		mano.setCarta(2, carta2);
 		mano.anhadirCarta(carta2);
-	
+		mano.setCarta(2, carta2);
+
 		return mano;
 
 	}
-	
+
 	public Mano getManoSeparada1(Mano mano) {
 
 		Mano manoNueva = new Mano();
-		manoNueva.setCarta(1, mano.getCarta(0));
+		manoNueva.setCarta(1, mano.getCarta(1));
 		manoNueva.setCarta(2, getCarta());
 		return manoNueva;
 
 	}
-	
+
 	public Mano getManoSeparada2(Mano mano) {
 
 		Mano manoNueva = new Mano();
@@ -75,30 +74,36 @@ public class Baraja {
 		return manoNueva;
 
 	}
-	
+
 	public Mano getManoDealer() {
-		Mano mano = new Mano();
+		Mano manoDealer = new Mano();
 		Carta carta1 = getCarta();
-		mano.anhadirCarta(carta1);
+		manoDealer.anhadirCartaDealer(carta1);
 		Carta dorso = Carta.getDorso();
-		mano.anhadirCarta(dorso);
-		mano.setCarta(1, carta1);
-		mano.setCarta(2, dorso);
-	
-		return mano;
+		manoDealer.anhadirCartaDealer(dorso);
+		manoDealer.setCartaDealer(1, carta1);
+		manoDealer.setCartaDealer(2, dorso);
+
+		return manoDealer;
 
 	}
-	
+
 	public Mano getNuevaCarta() {
 		Mano mano = new Mano();
 		Carta carta = getCarta();
 		mano.anhadirCarta(carta);
-	
+
 		return mano;
 
 	}
-	
-	
-	
-	
+
+	public Mano getNuevaCartaDealer() {
+		Mano manoDealer = new Mano();
+		Carta carta = getCarta();
+		manoDealer.anhadirCartaDealer(carta);
+
+		return manoDealer;
+
+	}
+
 }
