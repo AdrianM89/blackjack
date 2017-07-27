@@ -9,27 +9,26 @@ import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-
 @Theme("mytheme")
 public class MyUI extends UI {
-	
+
 	private VerticalLayout layout = new VerticalLayout();
-	
-    @Override
-    protected void init(VaadinRequest vaadinRequest) {
-    	
-    	Baraja baraja = new Baraja();
 
-        PantallaLayout pantallaLayout = new PantallaLayout(this, baraja);
-        
-        layout.addComponent(pantallaLayout);
-        
-        setContent(layout);
-                
-}
+	@Override
+	protected void init(VaadinRequest vaadinRequest) {
 
-    @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
-    @VaadinServletConfiguration(ui = MyUI.class, productionMode = false)
-    public static class MyUIServlet extends VaadinServlet {
-    }
+		Baraja baraja = new Baraja();
+
+		PantallaLayout pantallaLayout = new PantallaLayout(this, baraja);
+
+		layout.addComponent(pantallaLayout);
+
+		setContent(layout);
+
+	}
+
+	@WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
+	@VaadinServletConfiguration(ui = MyUI.class, productionMode = false)
+	public static class MyUIServlet extends VaadinServlet {
+	}
 }

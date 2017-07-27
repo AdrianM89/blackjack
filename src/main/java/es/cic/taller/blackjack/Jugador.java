@@ -8,6 +8,7 @@ public class Jugador {
 	private double dinero;
 	private int apuesta;
 	private int puntuacion;
+	boolean isPlantado = false;
 
 	public Jugador(String nombre, double dinero) {
 		this.nombre = nombre;
@@ -46,5 +47,11 @@ public class Jugador {
 
 	public void apostar(int apuesta) {
 		this.apuesta = apuesta;
+	}
+	public void plantarse() {
+		if(isPlantado == false) {
+			isPlantado = true;
+		}
+		isPlantado = false;
 	}
 }

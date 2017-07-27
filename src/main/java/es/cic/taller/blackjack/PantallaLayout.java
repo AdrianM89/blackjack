@@ -1,11 +1,15 @@
 package es.cic.taller.blackjack;
 
+import java.io.File;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 import java.util.List;
 
+import com.vaadin.server.FileResource;
 import com.vaadin.server.Page;
+import com.vaadin.server.Resource;
+import com.vaadin.server.VaadinService;
 import com.vaadin.server.Page.Styles;
 
 import com.vaadin.ui.Button;
@@ -49,8 +53,20 @@ public class PantallaLayout extends GridLayout {
 	private MyUI myUI;
 
 	private Baraja baraja;
-	
+
 	HorizontalLayout horizontalLayout = new HorizontalLayout();
+
+	Resource getImageResource(String recurso) {
+		String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
+		FileResource resource = new FileResource(new File(basepath + "/images/" + recurso));
+		return resource;
+	}
+
+	private void cargaImagen(Image inicio) {
+		inicio.setSource(getImageResource("blackjack.jpg"));
+		inicio.setWidth("100px");
+		inicio.setHeight("200px");
+	}
 
 	public PantallaLayout(MyUI myUI, Baraja baraja) {
 
@@ -82,6 +98,7 @@ public class PantallaLayout extends GridLayout {
 		tapeteFormJugador = new TapeteForm(myUI);
 		tapeteFormJugador.setMano(manoJugador);
 
+		Button botonComenzar = new Button("Comenzar");
 		Button botonDameCarta = new Button("Nueva carta");
 		Button botonDameCartaSegundaMano = new Button("Nueva carta");
 		botonDameCartaSegundaMano.setVisible(false);
@@ -97,27 +114,25 @@ public class PantallaLayout extends GridLayout {
 
 		Button botonRetirar = new Button("Retirarse");
 
-		// APOSTAR
+		String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
+		FileResource resource = new FileResource(new File(basepath + "/images/blackjack.png"));
+		Image imagen = new Image(null, resource);
 
+		// APOSTAR
 		apuesta.setVisible(false);
 		botonApostar.setEnabled(true);
 		botonApostar.addClickListener(e -> apuesta.setVisible(true));
-		apuesta.setPlaceholder("$2 - $999");
+		apuesta.setPlaceholder("$1 - $999");
 		apuesta.setMaxLength(3);
 		updateCaption(0);
 
-		Button intro = new Button("Intro");
-		intro.setVisible(false);
 		apuesta.addValueChangeListener(event -> {
 			updateCaption(event.getValue().length());
 			jugador1.apostar(Integer.parseInt(apuesta.getValue()));
-			intro.setVisible(true);
-			intro.addClickListener(e -> {
-				apuesta.setVisible(false);
-				intro.setVisible(false);
-			});
+			botonComenzar.setEnabled(true);
 		});
 
+		// RETIRARSE
 		botonRetirar.addClickListener(e -> {
 
 			botonDameCarta.setEnabled(false);
@@ -128,8 +143,13 @@ public class PantallaLayout extends GridLayout {
 			botonMePlantoSegundaMano.setEnabled(false);
 		});
 
-		horizontalLayout.addComponents(botonApostar, botonRetirar, botonDameCarta, botonDameCartaSegundaMano,
-				botonMePlanto, botonMePlantoSegundaMano, botonSeparar, apuesta, intro);
+		botonComenzar.setEnabled(false);
+		horizontalLayout.addComponents(botonComenzar, botonApostar, apuesta);
+		//
+		// //LAYOUT BOTONES
+		// horizontalLayout.addComponents(botonComenzar, botonApostar, botonRetirar,
+		// botonDameCarta, botonDameCartaSegundaMano, botonMePlanto,
+		// botonMePlantoSegundaMano, botonSeparar, apuesta, intro);
 
 		// BOTON DAME CARTA
 		botonDameCarta.addClickListener(e -> {
@@ -143,11 +163,8 @@ public class PantallaLayout extends GridLayout {
 
 		// ME PLANTO
 		botonMePlanto.addClickListener(e -> {
-			
 			mePlanto(myUI, baraja, manoDealer, manoJugador, botonDameCarta, botonDameCartaSegundaMano, botonMePlanto,
 					botonMePlantoSegundaMano);
-			
-
 		});
 
 		// Funcionalidad para separar mano cuando son las cartas iguales
@@ -167,18 +184,28 @@ public class PantallaLayout extends GridLayout {
 				horizontalLayoutSeparar.addComponent(tapeteFormJugadorNuevo);
 			});
 		}
-
+		// COMENZAR
 		puntuacion.setValue("Puntuacion: " + manoJugador.getPuntuacion());
-		puntuacionDealerLabel.setValue("Puntuacion Dealer: "+manoDealer.getPuntuacionDealer());
+		puntuacionDealerLabel.setValue("Puntuacion Dealer: " + manoDealer.getPuntuacionDealer());
+		botonComenzar.addClickListener(e -> {
+
+			removeComponent(0, 0);
+			addComponent(tapeteFormDealer, 0, 0);
+			addComponent(tapeteFormJugador, 0, 1);
+			addComponent(puntuacion, 0, 4);
+			addComponent(puntuacionDealerLabel, 1, 4);
+
+			// LAYOUT BOTONES
+			horizontalLayout.addComponents(botonComenzar, botonApostar, botonRetirar, botonDameCarta,
+					botonDameCartaSegundaMano, botonMePlanto, botonMePlantoSegundaMano, botonSeparar, apuesta);
+
+		});
 
 		setRows(6);
 		setColumns(2);
 
-		addComponent(tapeteFormJugador, 0, 1);
-		addComponent(tapeteFormDealer, 0, 0);
+		addComponent(imagen, 0, 0);
 		addComponent(horizontalLayout, 0, 2);
-		addComponent(puntuacion, 0, 4);
-		addComponent(puntuacionDealerLabel,1,1);
 	}
 
 	private void mePlanto(MyUI myUI, Baraja baraja, Mano manoDealer, Mano manoJugador, Button botonDameCarta,
@@ -195,11 +222,11 @@ public class PantallaLayout extends GridLayout {
 				int puntuacionJugador = manoJugador.getPuntuacion();
 
 				if (puntuacionDealer < PUNTUACION_17) {
-					
+
 					tapeteFormNuevaCartaDealer = new TapeteForm(myUI);
 					tapeteFormNuevaCartaDealer.setNuevaCarta(baraja.getNuevaCarta());
 					tapeteFormDealer.addComponent(tapeteFormNuevaCartaDealer);
-					
+
 				} else {
 					for (int i = 0; i < jugadores.size(); i++) {
 						if (puntuacionDealer < PUNTUACION_21) {
@@ -252,19 +279,18 @@ public class PantallaLayout extends GridLayout {
 
 				tapeteFormJugadorNuevo.addComponent(tapeteFormNuevaCarta2);
 			});
-			
-			
+
 			botonMePlantoSegundaMano.addClickListener(eve -> {
 
 				String str = new String();
 				botonDameCartaSegundaMano.setVisible(false);
 				jugadoresYaPlantados.add(jugador1);
-				
+
 				if (jugadoresYaPlantados.size() == jugadores.size()) {
-					
+
 					int puntuacionDealer = manoDealer.getPuntuacionDealer();
 					int puntuacionJugador = manoJugador.getPuntuacion();
-					
+
 					if (puntuacionDealer < PUNTUACION_17) {
 						tapeteFormNuevaCartaDealer = new TapeteForm(myUI);
 						tapeteFormNuevaCartaDealer.setNuevaCarta(baraja.getNuevaCarta());
@@ -317,11 +343,11 @@ public class PantallaLayout extends GridLayout {
 						}
 					}
 				}
-				
+
 				Label ganador = new Label(str);
-//				addComponent(ganador, 0, 5);
+				// addComponent(ganador, 0, 5);
 			});
-			
+
 		}
 
 	}
