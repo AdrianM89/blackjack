@@ -116,10 +116,8 @@ public class PantallaLayout extends GridLayout {
 		botonApostar.addClickListener(e -> apuesta.setVisible(true));
 		apuesta.setPlaceholder("$1 - $999");
 		apuesta.setMaxLength(3);
-		updateCaption(0);
 
 		apuesta.addValueChangeListener(event -> {
-			updateCaption(event.getValue().length());
 			jugador1.apostar(Integer.parseInt(apuesta.getValue()));
 			botonComenzar.setEnabled(true);
 		});
@@ -184,8 +182,9 @@ public class PantallaLayout extends GridLayout {
 			removeComponent(0, 0);
 			addComponent(tapeteFormDealer, 0, 0);
 			addComponent(tapeteFormJugador, 0, 1);
-			addComponent(puntuacion,0,4);
-			addComponent(dinero, 1, 4);
+			addComponent(puntuacion, 0, 4);
+			addComponent(puntuacionDealerLabel, 1, 4);
+			addComponent(dinero, 1, 5);
 			int apostado = dineroInicial - Integer.parseInt(apuesta.getValue());
 			dinero.setValue("Dinero restante: " + apostado);
 			
@@ -193,8 +192,7 @@ public class PantallaLayout extends GridLayout {
 			horizontalLayout.addComponents(botonComenzar, botonApostar, botonRetirar, botonDameCarta, botonDameCartaSegundaMano, botonMePlanto, 
 					botonMePlantoSegundaMano, botonSeparar, apuesta, dinero);
 			
-			addComponent(puntuacion, 0, 4);
-			addComponent(puntuacionDealerLabel, 1, 4);
+
 
 		});
 		
