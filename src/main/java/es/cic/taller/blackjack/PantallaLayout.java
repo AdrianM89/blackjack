@@ -1,14 +1,17 @@
 package es.cic.taller.blackjack;
 
 
+import java.io.File;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 
 import java.util.List;
 
-
+import com.vaadin.server.FileResource;
 import com.vaadin.server.Page;
+import com.vaadin.server.Resource;
+import com.vaadin.server.VaadinService;
 import com.vaadin.server.Page.Styles;
 
 import com.vaadin.ui.Button;
@@ -55,6 +58,26 @@ public class PantallaLayout extends GridLayout {
 	
 	private Baraja baraja;
 	HorizontalLayout horizontalLayout = new HorizontalLayout();
+	
+	
+	Resource getImageResource(String recurso) {
+		String basepath = VaadinService.getCurrent()
+                .getBaseDirectory().getAbsolutePath();
+		FileResource resource = new FileResource(new File(basepath +
+                "/images/" + recurso));
+        return resource;
+	}
+	
+
+	private void cargaImagen(Image inicio) {
+		inicio.setSource(getImageResource("blackjack.jpg"));
+		inicio.setWidth("100px");
+		inicio.setHeight("200px");
+	}
+
+	
+	
+	
 
 	public PantallaLayout(MyUI myUI, Baraja baraja) {
 
@@ -63,8 +86,6 @@ public class PantallaLayout extends GridLayout {
 
 		jugador1 = new Jugador("Jugador1", 500);
 		
-		jugadores.add(jugador1);
-
 		jugadores.add(jugador1);
 
 		this.myUI = myUI;
@@ -86,6 +107,7 @@ public class PantallaLayout extends GridLayout {
 		tapeteFormJugador = new TapeteForm(myUI);
 		tapeteFormJugador.setMano(manoJugador);
 
+		Button botonComenzar = new Button("Comenzar");
 
 		Button botonDameCarta = new Button("Nueva carta");
 		Button botonDameCartaSegundaMano = new Button("Nueva carta");
@@ -103,29 +125,27 @@ public class PantallaLayout extends GridLayout {
 		Button botonRetirar = new Button("Retirarse");
 
 		
+		String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
+		FileResource resource = new FileResource(new File(basepath + "/images/blackjack.png"));
+		Image imagen = new Image(null, resource);
+			
 		
 		// APOSTAR
-
 		apuesta.setVisible(false);
 		botonApostar.setEnabled(true);
 		botonApostar.addClickListener(e -> apuesta.setVisible(true));
-		apuesta.setPlaceholder("$2 - $999");
+		apuesta.setPlaceholder("$1 - $999");
 		apuesta.setMaxLength(3);
 		updateCaption(0);
 
-		Button intro = new Button("Intro");
-		intro.setVisible(false);
 		apuesta.addValueChangeListener(event -> {
 			updateCaption(event.getValue().length());
 			jugador1.apostar(Integer.parseInt(apuesta.getValue()));
-			intro.setVisible(true);
-			intro.addClickListener(e -> {
-				apuesta.setVisible(false);
-				intro.setVisible(false);
-			});
+			botonComenzar.setEnabled(true);
 		});
 
 
+		//RETIRARSE
 		botonRetirar.addClickListener(e -> {
 
 			botonDameCarta.setEnabled(false);
@@ -136,9 +156,13 @@ public class PantallaLayout extends GridLayout {
 			botonMePlantoSegundaMano.setEnabled(false);
 		});
 
-
-		horizontalLayout.addComponents(botonApostar, botonRetirar, botonDameCarta, botonDameCartaSegundaMano, botonMePlanto, 
-				botonMePlantoSegundaMano, botonSeparar, apuesta, intro);
+		
+		botonComenzar.setEnabled(false);
+		horizontalLayout.addComponents(botonComenzar, botonApostar, apuesta);
+//
+//		//LAYOUT BOTONES
+//		horizontalLayout.addComponents(botonComenzar, botonApostar, botonRetirar, botonDameCarta, botonDameCartaSegundaMano, botonMePlanto, 
+//				botonMePlantoSegundaMano, botonSeparar, apuesta, intro);
 
 		// BOTON DAME CARTA
 		botonDameCarta.addClickListener(e -> {
@@ -150,7 +174,8 @@ public class PantallaLayout extends GridLayout {
 
 		});
 
-				// ME PLANTO
+		
+		//ME PLANTO
 		botonMePlanto.addClickListener(e -> {
 
 			mePlanto(myUI, baraja, manoDealer, botonDameCarta, botonDameCartaSegundaMano, botonMePlanto,
@@ -161,7 +186,6 @@ public class PantallaLayout extends GridLayout {
 		
 		
 		//Funcionalidad para separar mano cuando son las cartas iguales
-
 		// SEPARAR
 
 		if (manoJugador.getCarta(1).getNumero() == manoJugador.getCarta(2).getNumero()) {
@@ -179,15 +203,27 @@ public class PantallaLayout extends GridLayout {
 		}
 
 		
-		puntuacion.setValue("Puntuacion: " +manoJugador.getPuntuacion());
+		
+		//COMENZAR
+		puntuacion.setValue("Puntuacion: " + manoJugador.getPuntuacion());
+		botonComenzar.addClickListener(e -> {
+			
+			removeComponent(0, 0);
+			addComponent(tapeteFormDealer, 0, 0);
+			addComponent(tapeteFormJugador, 0, 1);
+			addComponent(puntuacion,0,4);
+			
+			//LAYOUT BOTONES
+			horizontalLayout.addComponents(botonComenzar, botonApostar, botonRetirar, botonDameCarta, botonDameCartaSegundaMano, botonMePlanto, 
+					botonMePlantoSegundaMano, botonSeparar, apuesta);
+			
+		});
 		
 		setRows(5);
 		setColumns(2);
-
-		addComponent(tapeteFormJugador, 0, 1);
-		addComponent(tapeteFormDealer, 0, 0);
+		
+		addComponent(imagen, 0, 0);
 		addComponent(horizontalLayout, 0, 2);
-		addComponent(puntuacion,0,4);
 	}
 
 
