@@ -77,15 +77,15 @@ public class Baraja {
 	}
 	
 	public Mano getManoDealer() {
-		Mano mano = new Mano();
+		Mano manoDealer = new Mano();
 		Carta carta1 = getCarta();
-		mano.anhadirCarta(carta1);
+		manoDealer.anhadirCartaDealer(carta1);
 		Carta dorso = Carta.getDorso();
-		mano.anhadirCarta(dorso);
-		mano.setCarta(1, carta1);
-		mano.setCarta(2, dorso);
+		manoDealer.anhadirCartaDealer(dorso);
+		manoDealer.setCartaDealer(1, carta1);
+		manoDealer.setCartaDealer(2, dorso);
 	
-		return mano;
+		return manoDealer;
 
 	}
 	
@@ -95,6 +95,14 @@ public class Baraja {
 		mano.anhadirCarta(carta);
 	
 		return mano;
+
+	}
+	public Mano getNuevaCartaDealer() {
+		Mano manoDealer = new Mano();
+		Carta carta = getCarta();
+		manoDealer.anhadirCartaDealer(carta);
+	
+		return manoDealer;
 
 	}
 	

@@ -22,7 +22,9 @@ public class TapeteForm extends HorizontalLayout {
 	private Image imagen1 = new Image();
 	private Image imagen2 = new Image();
 	private Image imagen3 = new Image();
+	private Image imagen4 = new Image();
 	Carta cartaNueva;
+	Carta cartaNuevaDealer;
 
 	
 	
@@ -43,11 +45,20 @@ public class TapeteForm extends HorizontalLayout {
 		cargaCarta(mano.getCarta(1), imagen1);
 		cargaCarta(mano.getCarta(2), imagen2);
 	}
+	public void setManoDealer(Mano mano) {
+		cargaCarta(mano.getCartaDealer(1), imagen1);
+		cargaCarta(mano.getCartaDealer(2), imagen2);
+	}
 	
 	public void setNuevaCarta(Mano mano) {
 		cartaNueva = mano.getCarta(1);
 		cargaCarta(cartaNueva, imagen3);
 		horizontalLayout.addComponent(imagen3);
+	}
+	public void setNuevaCartaDealer(Mano mano) {
+		cartaNuevaDealer = mano.getCarta(1);
+		cargaCarta(cartaNueva, imagen4);
+		horizontalLayout.addComponent(imagen4);
 	}
 	
 	private Resource getImageResource(String recurso) {
