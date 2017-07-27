@@ -1,3 +1,4 @@
+
 package es.cic.taller.blackjack;
 
 public class Jugador {
@@ -20,6 +21,7 @@ public class Jugador {
 		this.manoActual = manoActual;
 	}
 	public void anhadirCartaAMano(Carta carta) {
+
 		manoActual.anhadirCarta(carta);
 	}
 	public String getNombre() {
@@ -39,8 +41,9 @@ public class Jugador {
 		this.apuesta = apuesta;
 	}
 	public int puntuacion() {
+
 		int puntuacion = 0;
-		for(int i = 0; i<manoActual.cartas.size(); i++) {
+		for(int i = 0; i < manoActual.cartas.size(); i++) {
 			puntuacion += manoActual.getCarta(i).getNumero().getValor();
 		}
 		return puntuacion;
