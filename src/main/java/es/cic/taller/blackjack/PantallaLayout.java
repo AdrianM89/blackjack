@@ -2,15 +2,10 @@ package es.cic.taller.blackjack;
 
 
 import java.io.File;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
-
-
-import java.util.List;
 
 import com.vaadin.server.FileResource;
 import com.vaadin.server.Page;
-import com.vaadin.server.Resource;
 import com.vaadin.server.VaadinService;
 import com.vaadin.server.Page.Styles;
 
@@ -20,8 +15,6 @@ import com.vaadin.ui.HorizontalLayout;
 
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.Notification.Type;
 
 import com.vaadin.ui.Label;
 
@@ -53,31 +46,11 @@ public class PantallaLayout extends GridLayout {
 	private ArrayList<Jugador> jugadoresYaPlantados = new ArrayList<Jugador>();
 
 
-
 	private MyUI myUI;
 	
 	private Baraja baraja;
 	HorizontalLayout horizontalLayout = new HorizontalLayout();
-	
-	
-	Resource getImageResource(String recurso) {
-		String basepath = VaadinService.getCurrent()
-                .getBaseDirectory().getAbsolutePath();
-		FileResource resource = new FileResource(new File(basepath +
-                "/images/" + recurso));
-        return resource;
-	}
-	
-
-	private void cargaImagen(Image inicio) {
-		inicio.setSource(getImageResource("blackjack.jpg"));
-		inicio.setWidth("100px");
-		inicio.setHeight("200px");
-	}
-
-	
-	
-	
+		
 
 	public PantallaLayout(MyUI myUI, Baraja baraja) {
 
@@ -95,6 +68,11 @@ public class PantallaLayout extends GridLayout {
 		
 		Label puntuacion = new Label();
 		puntuacion.addStyleName("h2");
+		
+		int dineroInicial = 1000;
+		Label dinero = new Label();
+		dinero.addStyleName("h2");
+		dinero.setValue("Dinero: " + dineroInicial);
 
 		horizontalLayoutSeparar = new HorizontalLayout();
 
@@ -123,8 +101,9 @@ public class PantallaLayout extends GridLayout {
 		Button botonApostar = new Button("Apostar");
 
 		Button botonRetirar = new Button("Retirarse");
+	
 
-		
+		//Imagen de inicio
 		String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
 		FileResource resource = new FileResource(new File(basepath + "/images/blackjack.png"));
 		Image imagen = new Image(null, resource);
@@ -136,10 +115,8 @@ public class PantallaLayout extends GridLayout {
 		botonApostar.addClickListener(e -> apuesta.setVisible(true));
 		apuesta.setPlaceholder("$1 - $999");
 		apuesta.setMaxLength(3);
-		updateCaption(0);
 
 		apuesta.addValueChangeListener(event -> {
-			updateCaption(event.getValue().length());
 			jugador1.apostar(Integer.parseInt(apuesta.getValue()));
 			botonComenzar.setEnabled(true);
 		});
@@ -154,15 +131,15 @@ public class PantallaLayout extends GridLayout {
 			botonSeparar.setEnabled(false);
 			botonDameCartaSegundaMano.setEnabled(false);
 			botonMePlantoSegundaMano.setEnabled(false);
+			botonComenzar.setEnabled(false);
 		});
 
 		
+		//BOTONES DE INICIO
 		botonComenzar.setEnabled(false);
-		horizontalLayout.addComponents(botonComenzar, botonApostar, apuesta);
-//
-//		//LAYOUT BOTONES
-//		horizontalLayout.addComponents(botonComenzar, botonApostar, botonRetirar, botonDameCarta, botonDameCartaSegundaMano, botonMePlanto, 
-//				botonMePlantoSegundaMano, botonSeparar, apuesta, intro);
+		horizontalLayout.addComponents(botonComenzar, botonApostar, apuesta, dinero);
+
+
 
 		// BOTON DAME CARTA
 		botonDameCarta.addClickListener(e -> {
@@ -187,7 +164,6 @@ public class PantallaLayout extends GridLayout {
 		
 		//Funcionalidad para separar mano cuando son las cartas iguales
 		// SEPARAR
-
 		if (manoJugador.getCarta(1).getNumero() == manoJugador.getCarta(2).getNumero()) {
 			botonSeparar.setEnabled(true);
 			botonSeparar.addClickListener(e -> {
@@ -210,16 +186,21 @@ public class PantallaLayout extends GridLayout {
 			
 			removeComponent(0, 0);
 			addComponent(tapeteFormDealer, 0, 0);
+			removeComponent(0, 1);
 			addComponent(tapeteFormJugador, 0, 1);
+			removeComponent(0, 4);
 			addComponent(puntuacion,0,4);
+			addComponent(dinero, 1, 4);
+			int apostado = dineroInicial - Integer.parseInt(apuesta.getValue());
+			dinero.setValue("Dinero restante: " + apostado);
 			
 			//LAYOUT BOTONES
 			horizontalLayout.addComponents(botonComenzar, botonApostar, botonRetirar, botonDameCarta, botonDameCartaSegundaMano, botonMePlanto, 
-					botonMePlantoSegundaMano, botonSeparar, apuesta);
+					botonMePlantoSegundaMano, botonSeparar, apuesta, dinero);
 			
 		});
 		
-		setRows(5);
+		setRows(6);
 		setColumns(2);
 		
 		addComponent(imagen, 0, 0);
