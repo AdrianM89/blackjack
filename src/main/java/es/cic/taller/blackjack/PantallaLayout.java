@@ -107,6 +107,9 @@ public class PantallaLayout extends GridLayout {
 		Button botonApostar = new Button("Apostar");
 
 		Button botonRetirar = new Button("Retirarse");
+		
+		Button botonNuevoJuego = new Button("Nuevo Juego");
+		botonNuevoJuego.setEnabled(false);
 
 		//Imagen de inicio
 		String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
@@ -135,10 +138,16 @@ public class PantallaLayout extends GridLayout {
 			botonSeparar.setEnabled(false);
 			botonDameCartaSegundaMano.setEnabled(false);
 			botonMePlantoSegundaMano.setEnabled(false);
-
-			Page.getCurrent().reload();
+			botonNuevoJuego.setEnabled(true);
+			
+			
 		});
 
+		
+		//NUEVO JUEGO
+		botonNuevoJuego.addClickListener(e -> {
+				Page.getCurrent().reload();
+		});
 		
 		//BOTONES DE INICIO
 		botonComenzar.setEnabled(false);
@@ -156,6 +165,11 @@ public class PantallaLayout extends GridLayout {
 			
 			if(manoJugador.getPuntuacion() > PUNTUACION_21) {
 				pierde();
+				botonNuevoJuego.setEnabled(true);
+				botonDameCarta.setEnabled(false);
+				botonApostar.setEnabled(false);
+				botonMePlanto.setEnabled(false);
+				botonSeparar.setEnabled(false);
 			}
 			
 		});
@@ -183,7 +197,7 @@ public class PantallaLayout extends GridLayout {
 				botonApostar.setEnabled(false);
 				botonMePlanto.setEnabled(false);
 				botonSeparar.setEnabled(false);
-				
+				botonNuevoJuego.setEnabled(true);
 				pierde();
 			}
 			
@@ -234,7 +248,7 @@ public class PantallaLayout extends GridLayout {
 			
 			//LAYOUT BOTONES
 			horizontalLayout.addComponents(botonComenzar, botonApostar, botonRetirar, botonDameCarta, botonDameCartaSegundaMano, botonMePlanto, 
-					botonMePlantoSegundaMano, botonSeparar, apuesta, dinero);
+					botonMePlantoSegundaMano, botonSeparar, botonNuevoJuego, apuesta, dinero);
 			
 
 
