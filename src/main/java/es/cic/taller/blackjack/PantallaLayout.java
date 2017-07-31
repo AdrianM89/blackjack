@@ -139,6 +139,8 @@ public class PantallaLayout extends GridLayout {
 			botonDameCartaSegundaMano.setEnabled(false);
 			botonMePlantoSegundaMano.setEnabled(false);
 			botonNuevoJuego.setEnabled(true);
+			botonRetirar.setEnabled(false);
+			botonComenzar.setEnabled(false);
 			
 			
 		});
