@@ -53,6 +53,8 @@ public class PantallaLayout extends GridLayout {
 	private List<Carta> nuevasCartas = new ArrayList<>();
 
 	private MyUI myUI;
+	private Mano manoJugador;
+	private Mano manoDealer;
 	
 	private Baraja baraja;
 	HorizontalLayout horizontalLayout = new HorizontalLayout();
@@ -82,13 +84,11 @@ public class PantallaLayout extends GridLayout {
 		dinero.setValue("Dinero: " + dineroInicial);
 		puntuacionDealerLabel.addStyleName("h2");
 
-		horizontalLayoutSeparar = new HorizontalLayout();
-
-		Mano manoDealer = baraja.getManoDealer();
+		manoDealer = baraja.getManoDealer();
 		tapeteFormDealer = new TapeteForm(myUI);
 		tapeteFormDealer.setManoDealer(manoDealer);
 
-		Mano manoJugador = baraja.getManoJugador();
+		manoJugador = baraja.getManoJugador();
 		tapeteFormJugador = new TapeteForm(myUI);
 		tapeteFormJugador.setMano(manoJugador);
 
@@ -188,8 +188,8 @@ public class PantallaLayout extends GridLayout {
 			}
 			
 			
-//			mePlanto(myUI, baraja, manoDealer, manoJugador, botonDameCarta, botonDameCartaSegundaMano, botonMePlanto,
-//					botonMePlantoSegundaMano);
+			mePlanto(myUI, baraja, manoDealer, manoJugador, botonDameCarta, botonDameCartaSegundaMano, botonMePlanto,
+					botonMePlantoSegundaMano);
 			
 		});
 
@@ -201,6 +201,8 @@ public class PantallaLayout extends GridLayout {
 			botonSeparar.setEnabled(true);
 			botonSeparar.addClickListener(e -> {
 
+				horizontalLayoutSeparar = new HorizontalLayout();
+				
 				botonSeparar.setEnabled(false);
 				addComponent(horizontalLayoutSeparar, 1, 2);
 
@@ -210,6 +212,8 @@ public class PantallaLayout extends GridLayout {
 				horizontalLayoutSeparar.addComponent(tapeteFormJugadorNuevo);
 			});
 		}
+		
+		
 		// COMENZAR
 		puntuacion.setValue("Puntuación Jugador: " + manoJugador.getPuntuacion());
 		puntuacionDealerLabel.setValue("Puntuación Dealer: " + manoDealer.getPuntuacionDealer());
